@@ -27,10 +27,10 @@ jobs:
                  -u ${HOST_UID}:${HOST_GID} \
                  -v $SSH_AUTH_SOCK:/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent \
                  -e GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" \
-                 -v /workspaces/assignment-6-diogomatos3/actions-runner/_work/assignment-6-diogomatos3/assignment-6-diogomatos3:/workspaces/assignment-6-diogomatos3/actions-runner/_work/assignment-6-diogomatos3/assignment-6-diogomatos3 \
+                 -v /workspaces/assignment-6-diogomatos3/actions-runner/_work/assignment-6-diogomatos3/assignment-6-diogomatos3:/workingdir \
                  -v /var/run/docker.sock:/var/run/docker.sock \
                  cuaesd/aesd-autotest:24-assignment6-yocto \
-                 --workdir=/workspaces/assignment-6-diogomatos3/actions-runner/_work/assignment-6-diogomatos3/assignment-6-diogomatos3 \
+                 --workdir=/workingdir \
                  bash -c "id"
             working-directory: ${{github.workspace}}
           - name: Cleanup
