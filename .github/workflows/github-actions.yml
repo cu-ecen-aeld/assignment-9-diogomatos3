@@ -16,11 +16,11 @@ jobs:
           - uses: webfactory/ssh-agent@v0.5.4
             with:
                  ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-          - name: Ensure valid workspace permissions
-            run: |
-              sudo chown -R $USER:$USER ${GITHUB_WORKSPACE}
-
+          - run: |
+              echo ${{ github.workspace }}
+              echo $GITHUB_WORKSPACE
+              stat -c "%u %g" ${{ github.workspace }}
+              stat -c "%u %g" $GITHUB_WORKSPACE
           - name: Run build
             timeout-minutes: 600
             run: |
