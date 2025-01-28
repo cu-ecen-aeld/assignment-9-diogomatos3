@@ -34,7 +34,6 @@ jobs:
                  -e GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" \
                  -v /var/run/docker.sock:/var/run/docker.sock \
                  cuaesd/aesd-autotest:24-assignment6-yocto \
-                 --workdir=${GITHUB_WORKSPACE} \
                  bash -c "id"
           - name: Cleanup
             if: always()
