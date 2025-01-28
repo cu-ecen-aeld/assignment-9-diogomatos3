@@ -19,14 +19,6 @@ jobs:
           - name: Run build
             timeout-minutes: 600
             run: |
-               export HOST_UID=$(stat -c "%u" $GITHUB_WORKSPACE)
-               export HOST_GID=$(stat -c "%g" $GITHUB_WORKSPACE)
-               echo "GitHub Workspace: ${{ github.workspace }}"
-               echo "Host UID: $HOST_UID"
-               echo "Host GID: $HOST_GID"
-               stat -c '%u %g' ${GITHUB_WORKSPACE}
-               chown -R ${HOST_UID}:${HOST_GID} $GITHUB_WORKSPACE
-               stat -c '%u %g' ${GITHUB_WORKSPACE}
                docker run --rm \
                  --privileged \
                  -u ${HOST_UID}:${HOST_GID} \
