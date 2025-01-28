@@ -26,6 +26,9 @@ jobs:
             run: |
                export HOST_UID=$(stat -c "%u" $GITHUB_WORKSPACE)
                export HOST_GID=$(stat -c "%g" $GITHUB_WORKSPACE)
+               echo "GitHub Workspace: ${{ github.workspace }}"
+               echo "Host UID: $HOST_UID"
+               echo "Host GID: $HOST_GID"
                docker run --rm \
                  --privileged \
                  -u ${HOST_UID}:${HOST_GID} \
