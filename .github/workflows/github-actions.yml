@@ -19,28 +19,16 @@ jobs:
           - name: Run build
             timeout-minutes: 600
             run: |
-              export HOST_UID=$(stat -c "%u" $GITHUB_WORKSPACE)
-              export HOST_GID=$(stat -c "%g" $GITHUB_WORKSPACE)
-              echo "GitHub Workspace: ${{ github.workspace }}"
-              echo "Host UID: $HOST_UID"
-              echo "Host GID: $HOST_GID"
-              
-              # Ensure the working directory is owned by the correct UID:GID
-              sudo chown -R ${HOST_UID}:${HOST_GID} ${GITHUB_WORKSPACE}
-              
-              stat -c '%u %g' ${GITHUB_WORKSPACE}
-              
-              # Run docker with the correct user and group
               docker run --rm \
                 --privileged \
                 -u ${HOST_UID}:${HOST_GID} \
                 -v $SSH_AUTH_SOCK:/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent \
                 -e GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" \
-                -v /workspaces/assignment-6-diogomatos3/actions-runner/_work/assignment-6-diogomatos3/assignment-6-diogomatos3:/workingdir \
+                -v ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
                 -v /var/run/docker.sock:/var/run/docker.sock \
                 cuaesd/aesd-autotest:24-assignment6-yocto \
-                --workdir=/workingdir \
-                bash -c "mkdir -p /workingdir && chown ${HOST_UID}:${HOST_GID} /workingdir && id"
+                --workdir=${GITHUB_WORKSPACE} \
+                ./build.sh
           - name: Cleanup
             if: always()
             run: |
