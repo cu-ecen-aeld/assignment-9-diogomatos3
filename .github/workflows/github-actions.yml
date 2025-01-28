@@ -19,25 +19,14 @@ jobs:
           - name: Run build
             timeout-minutes: 600
             run: |
-              export HOST_UID=$(stat -c "%u" $GITHUB_WORKSPACE)
-              export HOST_GID=$(stat -c "%g" $GITHUB_WORKSPACE)
-              echo "GitHub Workspace: ${{ github.workspace }}"
-              echo "Host UID: $HOST_UID"
-              echo "Host GID: $HOST_GID"
-              stat -c '%u %g' ${GITHUB_WORKSPACE}
-              
-              ls -ld ${GITHUB_WORKSPACE}
-
-              docker run --rm \
-                --privileged \
-                -u ${HOST_UID}:${HOST_GID} \
-                -v $SSH_AUTH_SOCK:/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent \
-                -e GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" \
-                --mount type=bind,source=${GITHUB_WORKSPACE},target=${GITHUB_WORKSPACE} \
-                -v /var/run/docker.sock:/var/run/docker.sock \
-                cuaesd/aesd-autotest:24-assignment6-yocto \
-                --workdir=${GITHUB_WORKSPACE} \
-                bash -c "id"
+               docker run --rm \
+                 --privileged \
+                 -v $SSH_AUTH_SOCK:/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent \
+                 -e GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" \
+                 -v ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
+                 -v /var/run/docker.sock:/var/run/docker.sock \
+                 cuaesd/aesd-autotest:24-assignment6-yocto \
+                 bash -c "whoami && pwd"
           - name: Cleanup
             if: always()
             run: |
