@@ -26,6 +26,7 @@ jobs:
             run: |
                docker run --rm \
                  --privileged \
+                 -u $(id -u):$(id -g) \  # Use host UID:GID
                  -v $SSH_AUTH_SOCK:/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent \
                  -e GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" \
                  -v ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
