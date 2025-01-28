@@ -1,0 +1,58 @@
+{
+	"name": "A Core Application",
+	"build": {
+		"dockerfile": "Dockerfile",
+    	"args": {
+      		"UNAME": "${localEnv:USER}"
+    }
+	},
+	"containerUser": "${localEnv:USER}",
+	"runArgs": [
+		"--shm-size=4200m",
+		"--privileged"
+    ],
+	"remoteEnv": {
+        "CONAN_USER_HOME": "/home/${localEnv:USER}/",
+        "DISPLAY": "${localEnv:DISPLAY}",
+        "HTTP_LOCAL_PROXY": "${localEnv:HTTP_PROXY}",
+        "HTTPS_LOCAL_PROXY": "${localEnv:HTTPS_PROXY}",
+        "http_local_proxy": "${localEnv:http_proxy}",
+        "https_local_proxy": "${localEnv:https_proxy}",
+        "WORKSPACE_FOLDER": "${containerWorkspaceFolder}"
+    },
+    "mounts": [
+        "source=${localEnv:HOME}/.ssh,target=/home/${localEnv:USER}/.ssh,type=bind,consistency=cached",
+        "source=${localEnv:HOME}/.gitconfig,target=/home/${localEnv:USER}/.gitconfig,type=bind,consistency=cached",
+		"source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+    ],
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"terminal.integrated.profiles.linux": { "bash": { "path": "/bin/bash" } },
+				"extensions.verifySignature": false
+			},
+			"extensions": [
+				"cschlosser.doxdocgen",
+				"ms-python.python",
+				"ms-vscode.cpptools",
+				"ms-vscode-remote.remote-containers",
+				"ms-vscode.remote-server",
+				"eamodio.gitlens",
+				"ms-azuretools.vscode-docker",
+				"ms-python.vscode-pylance",
+				"ms-vscode.cpptools-extension-pack",
+				"ms-vscode-remote.remote-ssh",
+				"ms-vscode-remote.vscode-remote-extensionpack",
+				"ms-vscode.cpptools-themes",
+				"ms-vscode-remote.remote-ssh-edit",
+				"redhat.vscode-yaml",
+				"hediet.vscode-drawio",
+				"ms-python.isort",
+				"ms-vscode.cmake-tools",
+				"ms-vscode.remote-explorer",
+				"ms-vscode-remote.remote-wsl",
+				"twxs.cmake"
+			]
+		}
+	}
+}
