@@ -24,7 +24,7 @@ jobs:
           - name: Run build
             timeout-minutes: 600
             run: |
-               sudo docker run --rm \
+               docker run --rm \
                  --privileged \
                  -v $SSH_AUTH_SOCK:/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent \
                  -e GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" \
