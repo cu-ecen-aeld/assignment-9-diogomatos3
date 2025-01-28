@@ -33,7 +33,7 @@ jobs:
                  -v /var/run/docker.sock:/var/run/docker.sock \
                  cuaesd/aesd-autotest:24-assignment6-yocto \
                  --workdir=${GITHUB_WORKSPACE} \
-                 ./build.sh
+                 bash -c "chown -R $(id -u):$(id -g) ${GITHUB_WORKSPACE} && ./build.sh"
           - name: Cleanup
             if: always()
             run: |
