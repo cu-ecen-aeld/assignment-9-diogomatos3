@@ -25,7 +25,7 @@ jobs:
                echo "Host UID: $HOST_UID"
                echo "Host GID: $HOST_GID"
                stat -c '%u %g' ${GITHUB_WORKSPACE}
-               chown -R HOST_UID:$HOST_GID $GITHUB_WORKSPACE
+               chown -R ${HOST_UID}:${HOST_GID} $GITHUB_WORKSPACE
                stat -c '%u %g' ${GITHUB_WORKSPACE}
                docker run --rm \
                  --privileged \
