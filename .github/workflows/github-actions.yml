@@ -23,7 +23,11 @@ jobs:
               stat -c "%u %g" $GITHUB_WORKSPACE
           - name: Debug container environment
             run: |
-              docker run --rm -v ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} -e GITHUB_WORKSPACE=${GITHUB_WORKSPACE} cuaesd/aesd-autotest:24-assignment6-yocto bash -c "id && stat -c '%u %g' ${GITHUB_WORKSPACE}"
+              docker run --rm \
+              -v ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
+              -e GITHUB_WORKSPACE=${GITHUB_WORKSPACE} \
+              cuaesd/aesd-autotest:24-assignment6-yocto \
+              bash -c "id && stat -c '%u %g' ${GITHUB_WORKSPACE} && chown -R $(id -u):$(id -g) ${GITHUB_WORKSPACE} && stat -c '%u %g' ${GITHUB_WORKSPACE}"
           - name: Run build
             timeout-minutes: 600
             run: |
