@@ -19,6 +19,15 @@ jobs:
           - name: Run build
             timeout-minutes: 600
             run: |
+              export HOST_UID=$(stat -c "%u" $GITHUB_WORKSPACE)
+              export HOST_GID=$(stat -c "%g" $GITHUB_WORKSPACE)
+              echo "GitHub Workspace: ${{ github.workspace }}"
+              echo "Host UID: $HOST_UID"
+              echo "Host GID: $HOST_GID"
+              stat -c '%u %g' ${GITHUB_WORKSPACE}
+              
+              ls -ld ${GITHUB_WORKSPACE}
+
               docker run --rm \
                 --privileged \
                 -u ${HOST_UID}:${HOST_GID} \
@@ -28,7 +37,7 @@ jobs:
                 -v /var/run/docker.sock:/var/run/docker.sock \
                 cuaesd/aesd-autotest:24-assignment6-yocto \
                 --workdir=${GITHUB_WORKSPACE} \
-                ./build.sh
+                bash -c "id"
           - name: Cleanup
             if: always()
             run: |
