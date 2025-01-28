@@ -20,6 +20,8 @@ jobs:
             timeout-minutes: 600
             run: |
                pwd
+               id
+               stat -c "%u %g" .
             working-directory: ${{github.workspace}}
           - name: Cleanup
             if: always()
