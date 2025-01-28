@@ -54,5 +54,6 @@
 				"twxs.cmake"
 			]
 		}
-	}
+	},
+	"postCreateCommand": "sudo chown -R $(id -u):$(id -g) /workspaces"
 }
