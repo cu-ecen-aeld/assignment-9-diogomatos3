@@ -28,7 +28,8 @@ jobs:
                  -v ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE} \
                  -v /var/run/docker.sock:/var/run/docker.sock \
                  cuaesd/aesd-autotest:24-assignment6-yocto \
-                 bash -c "cd ${GITHUB_WORKSPACE} && pwd && ls"
+                 --workdir=${GITHUB_WORKSPACE} \
+                 ./build.sh
           - name: Cleanup
             if: always()
             run: |
