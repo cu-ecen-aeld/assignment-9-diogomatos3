@@ -36,6 +36,6 @@ do_install() {
         install -d ${D}${sysconfdir}/init.d
     install -m 0755 ${WORKDIR}/aesdcharinit.sh ${D}${sysconfdir}/init.d    
     install -d ${D}${base_bindir}
-        install -m 0755 ${S}/aesd-char-driver/aesdchar_load ${D}${base_bindir}
-        install -m 0755 ${S}/aesd-char-driver/aesdchar_unload ${D}${base_bindir}
+        install -m 0755 ${S}/aesdchar_load ${D}${base_bindir}
+        install -m 0755 ${S}/aesdchar_unload ${D}${base_bindir}
 }
