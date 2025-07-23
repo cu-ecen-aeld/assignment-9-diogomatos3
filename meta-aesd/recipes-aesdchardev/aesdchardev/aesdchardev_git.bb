@@ -23,6 +23,7 @@ EXTRA_OEMAKE += "KERNELDIR=${STAGING_KERNEL_DIR}"
 # Lists files to be included in the package (kernel module loader/unloader scripts and the init script).
 FILES:${PN} += "${bindir}/aesdchar_load"
 FILES:${PN} += "${bindir}/aesdchar_unload"
+FILES:${PN} += "${sysconfdir}/init.d/aesdchar"
 
 INITSCRIPT_PACKAGES = "${PN}"
 INITSCRIPT_NAME:${PN} = "aesdchar-start-stop"
