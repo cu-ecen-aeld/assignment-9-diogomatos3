@@ -23,6 +23,9 @@ EXTRA_OEMAKE += "KERNELDIR=${STAGING_KERNEL_DIR}"
 FILES:${PN} += "${bindir}/aesdchar_load"
 FILES:${PN} += "${bindir}/aesdchar_unload"
 
+INITSCRIPT_PACKAGES = "${PN}"
+INITSCRIPT_NAME:${PN} = "aesdchar-start-stop"
+
 do_configure () {
 	:
 }
