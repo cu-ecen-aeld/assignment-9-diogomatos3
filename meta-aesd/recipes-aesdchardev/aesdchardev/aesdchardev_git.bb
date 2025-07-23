@@ -40,6 +40,6 @@ do_install () {
     install -m 0755 ${S}/aesdchar_load ${D}${bindir}
     install -m 0755 ${S}/aesdchar_unload ${D}${bindir}
     install -d ${D}${sysconfdir}/init.d
-    install -m 0755 {S}/aesdchar-start-stop ${D}${sysconfdir}/init.d/aesdchar
+    install -m 0755 ${S}/aesdchar-start-stop ${D}${sysconfdir}/init.d/aesdchar
 
 }
