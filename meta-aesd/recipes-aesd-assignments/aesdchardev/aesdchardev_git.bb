@@ -1,6 +1,3 @@
-inherit update-rc.d
-inherit module
-
 # See https://git.yoctoproject.org/poky/tree/meta/files/common-licenses
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
@@ -21,12 +18,16 @@ EXTRA_OEMAKE:append:task-install = " -C ${STAGING_KERNEL_DIR} M=${S}/aesd-char-d
 EXTRA_OEMAKE += "KERNELDIR=${STAGING_KERNEL_DIR}"
 
 # Lists files to be included in the package (kernel module loader/unloader scripts and the init script).
-FILES:${PN} += "${bindir}/aesdchar_load"
-FILES:${PN} += "${bindir}/aesdchar_unload"
+FILES:${PN} += "${base_bindir}/aesdchar_load"
+FILES:${PN} += "${base_bindir}/aesdchar_unload"
 FILES:${PN} += "${sysconfdir}/init.d/aesdchar"
 
+# Startup
+inherit update-rc.d
+inherit module
+
 INITSCRIPT_PACKAGES = "${PN}"
-INITSCRIPT_NAME:${PN} = "aesdchar-start-stop"
+INITSCRIPT_NAME:${PN} = "aesdchar"
 
 do_configure () {
 	:
@@ -37,10 +38,12 @@ do_compile () {
 }
 
 do_install () {
-    install -d ${D}${bindir}
-    install -m 0755 ${S}/aesdchar_load ${D}${bindir}
-    install -m 0755 ${S}/aesdchar_unload ${D}${bindir}
+    install -d ${D}${base_bindir}
     install -d ${D}${sysconfdir}/init.d
-    install -m 0755 ${S}/aesdchar-start-stop ${D}${sysconfdir}/init.d/aesdchar
+
+    install -m 0755 ${S}/aesdchar_load ${D}${base_bindir}/
+    install -m 0755 ${S}/aesdchar_unload ${D}${base_bindir}/
+    
+    install -m 0755 ${WORKDIR}/aesdchar-start-stop ${D}${sysconfdir}/init.d/aesdchar
 
 }
