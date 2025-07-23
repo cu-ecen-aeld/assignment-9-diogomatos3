@@ -12,6 +12,9 @@ SRCREV = "4881d14ea5e11d19bcd72041efb035a69f250a4c"
 # This sets your staging directory based on WORKDIR, where WORKDIR is defined at 
 # https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-WORKDIR
 S = "${WORKDIR}/git/aesd-char-driver"
+UNPACKDIR = "${S}"
+
+RPROVIDES:${PN} += "kernel-module-aesdchar"
 
 # Startup
 inherit update-rc.d
@@ -22,8 +25,8 @@ FILES:${PN} += "${base_bindir}/aesdchar_load"
 FILES:${PN} += "${base_bindir}/aesdchar_unload"
 FILES:${PN} += "${sysconfdir}/init.d/aesdchar"
 
-INITSCRIPT_PACKAGES = "${PN}"
-INITSCRIPT_NAME:${PN} = "aesdchar"
+INITSCRIPT_NAME = "aesdchar-start-stop"
+INITSCRIPT_PARAMS = "defaults"
 
 # Passes extra variables to make for building the kernel module.
 EXTRA_OEMAKE:append:task-install = " -C ${STAGING_KERNEL_DIR} M=${S}"
@@ -38,11 +41,11 @@ do_compile () {
 }
 
 do_install () {
-    install -d ${D}${base_bindir}
+    install -d ${D}${bindir}
     install -d ${D}${sysconfdir}/init.d
 
-    install -m 0755 ${S}/aesdchar_load ${D}${base_bindir}/
-    install -m 0755 ${S}/aesdchar_unload ${D}${base_bindir}/
+    install -m 0755 ${S}/aesdchar_load ${D}${bindir}/
+    install -m 0755 ${S}/aesdchar_unload ${D}${bindir}/
     
     install -m 0755 ${S}/aesdchar-start-stop ${D}${sysconfdir}/init.d/aesdchar
 
