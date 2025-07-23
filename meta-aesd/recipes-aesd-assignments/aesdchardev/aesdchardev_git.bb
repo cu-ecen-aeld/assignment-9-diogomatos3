@@ -13,21 +13,21 @@ SRCREV = "193c742cafc88f765e3bec4dedbe12cf9393241a"
 # https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-WORKDIR
 S = "${WORKDIR}/git/aesd-char-driver"
 
-# Passes extra variables to make for building the kernel module.
-EXTRA_OEMAKE:append:task-install = " -C ${STAGING_KERNEL_DIR} M=${S}/aesd-char-driver"
-EXTRA_OEMAKE += "KERNELDIR=${STAGING_KERNEL_DIR}"
+# Startup
+inherit update-rc.d
+inherit module
 
 # Lists files to be included in the package (kernel module loader/unloader scripts and the init script).
 FILES:${PN} += "${base_bindir}/aesdchar_load"
 FILES:${PN} += "${base_bindir}/aesdchar_unload"
 FILES:${PN} += "${sysconfdir}/init.d/aesdchar"
 
-# Startup
-inherit update-rc.d
-inherit module
-
 INITSCRIPT_PACKAGES = "${PN}"
 INITSCRIPT_NAME:${PN} = "aesdchar"
+
+# Passes extra variables to make for building the kernel module.
+EXTRA_OEMAKE:append:task-install = " -C ${STAGING_KERNEL_DIR} M=${S}/aesd-char-driver"
+EXTRA_OEMAKE += "KERNELDIR=${STAGING_KERNEL_DIR}"
 
 do_configure () {
 	:
