@@ -26,7 +26,7 @@ INITSCRIPT_PACKAGES = "${PN}"
 INITSCRIPT_NAME:${PN} = "aesdchar"
 
 # Passes extra variables to make for building the kernel module.
-EXTRA_OEMAKE:append:task-install = " -C ${STAGING_KERNEL_DIR} M=${S}/aesd-char-driver"
+EXTRA_OEMAKE:append:task-install = " -C ${STAGING_KERNEL_DIR} M=${S}"
 EXTRA_OEMAKE += "KERNELDIR=${STAGING_KERNEL_DIR}"
 
 do_configure () {
