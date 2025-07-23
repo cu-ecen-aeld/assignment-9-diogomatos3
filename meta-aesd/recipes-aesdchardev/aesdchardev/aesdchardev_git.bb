@@ -1,4 +1,5 @@
 inherit update-rc.d
+inherit module
 
 # See https://git.yoctoproject.org/poky/tree/meta/files/common-licenses
 LICENSE = "MIT"
