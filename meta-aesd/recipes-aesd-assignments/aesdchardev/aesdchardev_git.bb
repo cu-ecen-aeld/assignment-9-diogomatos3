@@ -12,7 +12,6 @@ SRCREV = "4881d14ea5e11d19bcd72041efb035a69f250a4c"
 # This sets your staging directory based on WORKDIR, where WORKDIR is defined at 
 # https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-WORKDIR
 S = "${WORKDIR}/git/aesd-char-driver"
-UNPACKDIR = "${S}"
 
 RPROVIDES:${PN} += "kernel-module-aesdchar"
 
@@ -21,16 +20,15 @@ inherit update-rc.d
 inherit module
 
 # Lists files to be included in the package (kernel module loader/unloader scripts and the init script).
-FILES:${PN} += "${base_bindir}/aesdchar_load"
-FILES:${PN} += "${base_bindir}/aesdchar_unload"
+FILES:${PN} += "${bindir}/aesdchar_load"
+FILES:${PN} += "${bindir}/aesdchar_unload"
 FILES:${PN} += "${sysconfdir}/init.d/aesdchar"
 
-INITSCRIPT_NAME = "aesdchar-start-stop"
+INITSCRIPT_NAME = "aesdchar"
 INITSCRIPT_PARAMS = "defaults"
 
 # Passes extra variables to make for building the kernel module.
-EXTRA_OEMAKE:append:task-install = " -C ${STAGING_KERNEL_DIR} M=${S}"
-EXTRA_OEMAKE += "KERNELDIR=${STAGING_KERNEL_DIR}"
+EXTRA_OEMAKE = "KERNELDIR=${STAGING_KERNEL_DIR} -C ${STAGING_KERNEL_DIR} M=${S}"
 
 do_configure () {
 	:
