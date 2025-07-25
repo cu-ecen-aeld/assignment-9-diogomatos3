@@ -11,20 +11,20 @@ SRCREV = "d4bd861de324d0a097c1eda729b5876e49550c6e"
 
 # This sets your staging directory based on WORKDIR, where WORKDIR is defined at 
 # https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-WORKDIR
-S = "${WORKDIR}/git/misc-modules"
+S = "${WORKDIR}/git/scull"
 
-RPROVIDES:${PN} += "kernel-module-misc-modules"
+RPROVIDES:${PN} += "kernel-module-scull"
 
 # Startup
-inherit update-rc.d
 inherit module
+inherit update-rc.d
 
 # Lists files to be included in the package (kernel module loader/unloader scripts and the init script).
-FILES:${PN} += "${bindir}/misc-modules_load"
-FILES:${PN} += "${bindir}/misc-modules_unload"
-FILES:${PN} += "${sysconfdir}/init.d/misc-modules"
+FILES:${PN} += "${bindir}/scull_load"
+FILES:${PN} += "${bindir}/scull_unload"
+FILES:${PN} += "${sysconfdir}/init.d/scull"
 
-INITSCRIPT_NAME = "misc-modules"
+INITSCRIPT_NAME = "scull"
 INITSCRIPT_PARAMS = "defaults"
 
 # Passes extra variables to make for building the kernel module.
@@ -40,10 +40,9 @@ do_compile () {
 
 do_install:append () {
     install -d ${D}${bindir}
-    install -m 0755 ${S}/misc-modules_load ${D}${bindir}/
-    install -m 0755 ${S}/misc-modules_unload ${D}${bindir}/
-    
-    install -d ${D}${sysconfdir}/init.d
-    install -m 0755 ${S}/misc-modules-start-stop ${D}${sysconfdir}/init.d/misc-modules
+    install -m 0755 ${S}/scull_load ${D}${bindir}/
+    install -m 0755 ${S}/scull_unload ${D}${bindir}/
 
+    install -d ${D}${sysconfdir}/init.d
+	install -m 0755 ${S}/scull-start-stop ${D}${sysconfdir}/init.d/scull
 }
