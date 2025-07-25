@@ -7,7 +7,7 @@ SRC_URI = "git://git@github.com/cu-ecen-aeld/assignments-3-and-later-diogomatos3
 
 # Set the version and specific git commit to use.
 PV = "1.0+git${SRCPV}"
-SRCREV = "c095b4cfabe4b4d16d4cce90a8cd661a13a15ba6"
+SRCREV = "15c3d4edfbafa4c48ddc59e92bd55d27170a228d"
 
 # This sets your staging directory based on WORKDIR, where WORKDIR is defined at 
 # https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-WORKDIR
@@ -38,13 +38,12 @@ do_compile () {
 	oe_runmake
 }
 
-do_install () {
+do_install:append () {
     install -d ${D}${bindir}
-    install -d ${D}${sysconfdir}/init.d
-
     install -m 0755 ${S}/aesdchar_load ${D}${bindir}/
     install -m 0755 ${S}/aesdchar_unload ${D}${bindir}/
     
+    install -d ${D}${sysconfdir}/init.d
     install -m 0755 ${S}/aesdchar-start-stop ${D}${sysconfdir}/init.d/aesdchar
 
 }
