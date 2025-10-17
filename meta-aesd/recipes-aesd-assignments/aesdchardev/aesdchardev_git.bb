@@ -7,7 +7,7 @@ SRC_URI = "git://git@github.com/cu-ecen-aeld/assignments-3-and-later-diogomatos3
 
 # Set the version and specific git commit to use.
 PV = "1.0+git${SRCPV}"
-SRCREV = "eb0f6b30540c9199bfe40521a1c2102a94fadef5"
+SRCREV = "bb49fb7dba72e379fbb8ff5e95580cbf007b62da"
 
 # This sets your staging directory based on WORKDIR, where WORKDIR is defined at 
 # https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-WORKDIR
