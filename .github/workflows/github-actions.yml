@@ -27,7 +27,7 @@ jobs:
           - name: List files
             run: ls -l ${GITHUB_WORKSPACE}
           - name: Run build
-            timeout-minutes: 600
+            timeout-minutes: 60000
             run: |
                docker run --rm \
                  --privileged \
